@@ -64,13 +64,13 @@
         for(var z in data){
             if( data[ z ].send_by == $('#id_sesi').val() ){
                 str += '<div class="alert alert-secondary ml-4" role="alert">';
-                str += '<span>'+data[z].id+' '+data[ z ].message+'</span>';
+                str += '<span>'+data[z].chat_id+' '+data[ z ].message+'</span>';
                 str += '</div>';
             }else{
                 str += '<div class="media my-3">';
                     str += '<img src="https://via.placeholder.com/50" class="mr-3 rounded" alt="...">';
                     str += '<div class="media-body text-secondary">';
-                    str += '<span>'+data[z].id+' '+data[ z ].message+'</span>';
+                    str += '<span>'+data[z].chat_id+' '+data[ z ].message+'</span>';
                     str += '</div>';
                 str += '</div>';
             }

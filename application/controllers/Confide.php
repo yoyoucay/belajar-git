@@ -278,7 +278,7 @@ class Confide extends CI_Controller {
 				// $push = $this->db->order_by('time','ASC');
 				// $push = $this->db->get('chat')->result();
 
-				$push = $this->db->select('chat.message, chat.send_by, chat.time, users.username')
+				$push = $this->db->select('chat.chat_id, chat.message, chat.send_by, chat.time, users.username')
                     ->from('chat')
                     ->join('users', 'chat.send_by = users.id')
                     ->where('(send_by = '.$userid.' AND send_to = '.$accountid.')')
