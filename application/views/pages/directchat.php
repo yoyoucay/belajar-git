@@ -14,7 +14,7 @@
                 <div class="media my-3">
                     <img src="https://via.placeholder.com/50" class="mr-3 rounded" alt="...">
                     <div class="media-body text-secondary">
-                    <?php echo "$list->message"; ?>
+                    <?php echo "$list->chat_id"." $list->message"; ?>
                     </div>
                 </div>
                 <?php
@@ -22,7 +22,7 @@
             else{
                 ?>
                 <div class="alert alert-secondary ml-4" role="alert">
-                    <?php echo "$list->message"; ?>
+                    <?php echo "$list->chat_id"." $list->message"; ?>
                 </div>
                 <?php
                     }
