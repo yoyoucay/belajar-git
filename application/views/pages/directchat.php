@@ -44,7 +44,7 @@
 </ul>
     
 <script>
-
+    
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -64,7 +64,7 @@
         for(var z in data){
             if( data[ z ].send_by == $('#id_sesi').val() ){
                 str += '<div class="alert alert-secondary ml-4" role="alert">';
-                str += '<span>'+data[z].chat_id+' '+data[ z ].message+'</span>';
+                str += '<span>'+data[z].chat_id+' '+data[ z ].message+' <button onclick="unsend('+data[z].chat_id+')"> Unsend </button></span>';
                 str += '</div>';
             }else{
                 str += '<div class="media my-3">';
@@ -106,5 +106,6 @@ function unsend(id)
         });
  
     }
+    document.location.reload(true);
 }
 </script>
