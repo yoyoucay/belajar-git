@@ -293,4 +293,9 @@ class Confide extends CI_Controller {
 				$pusher->trigger('my-channel', 'my-event', $data_pusher);
 			}
 		}
+	
+	public function UnsendChat($chatid)
+	{
+        $this->user_models->unsend_chat_id($chatid);
+	}
 }

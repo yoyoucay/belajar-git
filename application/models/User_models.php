@@ -188,6 +188,12 @@ class user_models extends CI_Model
                     ->result();
                     return $chats;
     }
+
+    public function unsend_chat_id($chatid)
+    {
+        $data = array('chat_id' => $chatid);
+        return $this->db->delete('chat', $data);
+    }
     
     
     // Fungsi untuk mencari Akun dari username, maupun Full name

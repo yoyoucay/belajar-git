@@ -22,7 +22,7 @@
             else{
                 ?>
                 <div class="alert alert-secondary ml-4" role="alert">
-                    <?php echo "$list->chat_id"." $list->message"; ?>
+                    <?php echo "$list->chat_id"." $list->message "."<button onclick='unsend(".$list->chat_id.")'> Unsend </button>"; ?>
                 </div>
                 <?php
                     }
@@ -92,5 +92,19 @@
         data: value,
         dataType: 'JSON'
     });
+}
+
+function unsend(id)
+{
+    if(confirm('Are you sure delete this data?'))
+    {
+        // ajax delete data to database
+        $.ajax({
+            url : "<?php echo site_url('confide/UnsendChat')?>/"+id,
+            type: "POST",
+            dataType: "JSON"
+        });
+ 
+    }
 }
 </script>
