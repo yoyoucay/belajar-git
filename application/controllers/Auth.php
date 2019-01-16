@@ -241,6 +241,12 @@ class Auth extends CI_Controller {
     {
         // $this->load->model('users_model');
         $search = $this->input->post('txt_username');
+        $query = $this->user_models->searchppl($search);
+        if (!$query) {
+			$this->load->view('layouts/header');
+            $this->load->view('layouts/error');
+            $this->load->view('layouts/footer');
+		}else {
         $data['users'] =  $this->user_models->searchppl($search);
         $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
         $this->load->view('layouts/header');
@@ -248,6 +254,7 @@ class Auth extends CI_Controller {
         $this->load->view('pages/search',$data);
         $this->load->view('layouts/navbar_bottom');
         $this->load->view('layouts/footer');
+        }
     }
 
     public function set_settings(){

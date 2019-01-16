@@ -1,4 +1,3 @@
-<?php require_once(APPPATH. "/views/layouts/header.php");?>
 <div class="container-fluid py-5 text-center">
 <h1 class="display-4">Kaca</h1>
     <blockquote class="blockquote text-center">
@@ -7,4 +6,3 @@
     </blockquote>
     <a onclick="goBack()" class="btn btn-dark btn-sm text-white">Kembali kehalaman sebelumnya</a>
 </div>
-<?php require_once(APPPATH. "/views/layouts/footer.php");?>

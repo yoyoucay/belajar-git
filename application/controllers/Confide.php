@@ -153,7 +153,13 @@ class Confide extends CI_Controller {
 	}
 	
 	public function view_post($confideid){
-	    
+
+		$query = $this->confide_models->get_details($confideid);
+        if (!$query) {
+			$this->load->view('layouts/header');
+            $this->load->view('layouts/error');
+            $this->load->view('layouts/footer');
+		}else {	    
 	    $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']); // Menampilkan Data User
 		$data['details'] = $this->confide_models->get_details($confideid); // Menampilkan Data Confide
 		$data['count_suka'] = $this->confide_models->count_likeConfide($confideid); // Menampilkan Data Jumlah Like yang terhubung dengan ID CONFIDE.
@@ -166,6 +172,7 @@ class Confide extends CI_Controller {
 		$this->load->view('pages/details', $data);
 		$this->load->view('layouts/navbar_bottom');
 		$this->load->view('layouts/footer');
+		}
 	}
 	
     // ================================================
@@ -234,7 +241,7 @@ class Confide extends CI_Controller {
 		$query = $this->user_models->get_user('username',$username);
 		if (!$query) {
 			$this->load->view('layouts/header');
-            $this->load->view('404_notfound/index.html');
+            $this->load->view('layouts/error');
             $this->load->view('layouts/footer');
 		}else {
 		$data = array(
