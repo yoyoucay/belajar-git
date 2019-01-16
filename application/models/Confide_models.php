@@ -290,7 +290,7 @@ public function set_confideVideoUpdate($confideid){
     		confide.created_at,
     		confide.deskripsi
     		FROM confide INNER JOIN users ON users.id = confide.user_id
-    		WHERE confide.id = $confideid"
+    		WHERE confide.id = '$confideid'"
     	);
 	    return $query->row_array();
     }

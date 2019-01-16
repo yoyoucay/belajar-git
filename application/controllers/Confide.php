@@ -155,6 +155,7 @@ class Confide extends CI_Controller {
 	public function view_post($confideid){
 
 		$query = $this->confide_models->get_details($confideid);
+		// die(var_dump(is_int(asdasdasdas)));
         if (!$query) {
 			$this->load->view('layouts/header');
             $this->load->view('layouts/error');

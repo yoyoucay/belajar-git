@@ -36,6 +36,12 @@ class User extends CI_Controller {
 	public function views($username = NULL)
 	{
 
+		$query = $this->user_models->get_users($username);
+        if (!$query) {
+			$this->load->view('layouts/header');
+            $this->load->view('layouts/error');
+            $this->load->view('layouts/footer');
+		}else {
 	    // following / followers untuk ditampikan ke page profile
 		$data['count_follower'] = $this->user_models->ambil_followers($username);
 		$data['count_follow'] = $this->user_models->ambil_following($username);
@@ -52,6 +58,7 @@ class User extends CI_Controller {
 		$this->load->view('pages/user',$data);
 		$this->load->view('layouts/navbar_bottom');
 		$this->load->view('layouts/footer');
+		}
 	}
 	
 	
