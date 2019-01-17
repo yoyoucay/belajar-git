@@ -151,23 +151,32 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|callback_checkEmail');
         $this->form_validation->set_rules('password', 'Password', 'required|callback_checkPassword');
         
-        $checkrole_user =  $this->user_models->get_user('email', $this->input->post('email'));
+        $check_user =  $this->user_models->get_user('email', $this->input->post('email'));
 
         if($this->form_validation->run() === false)
         {
             $this->load->view('layouts/header');
             $this->load->view('auth/login');
             $this->load->view('layouts/footer');
-        }
-            elseif ($checkrole_user['role'] == 0) {
+
+        }elseif($check_user['role'] == 0) {
                    
-                $data['token'] = $checkrole_user['token'];
+                $data['token'] = $check_user['token'];
                 $data['email'] = $this->input->post('email');
                 $this->load->view('layouts/header');
                 $this->load->view('pages/activation', $data);
                 $this->load->view('layouts/footer');
 
-        }else {
+        } elseif ($check_user['hak'] == 1) {
+
+            $user = $this->user_models->get_user('email', $this->input->post('email'));
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['akses'] = $check_user['hak'];
+            $_SESSION['logged_in'] = true;
+            redirect('admin');
+        }
+
+        else {
 
             $user = $this->user_models->get_user('email', $this->input->post('email'));
             
@@ -290,5 +299,23 @@ class Auth extends CI_Controller {
 		$this->confide_models->set_feedback();
 		redirect('home');
 	
-	}
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////
+
+    public function administrator()
+    {
+        if(!$this->user_models->is_LoggedIn()){
+        redirect('login');
+        }
+
+            $check_user = $this->user_models->get_user('id', $_SESSION['user_id']);
+            if(@$_SESSION['akses'] == 1){
+                $data['nickname'] = $check_user['username'];
+                $data['account'] = $this->user_models->getAll_user();
+                $this->load->view('pages/adminpage', $data);
+            }else{
+                show_404();
+            }
+    }
 }

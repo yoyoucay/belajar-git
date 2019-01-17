@@ -6,6 +6,8 @@ $route['login'] 	= 'auth/login';
 $route['logout'] 	= 'auth/logout';
 $route['verify/(:any)/(:any)'] 	= 'auth/verify_register/$1/$2';
 
+$route['admin'] = 'auth/administrator';
+
 $route['details/(:any)'] = 'confide/view_post/$1';
 $route['settings']  = 'user/settings';
 $route['search']  = 'auth/search';

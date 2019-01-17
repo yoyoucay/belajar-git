@@ -34,6 +34,14 @@ class user_models extends CI_Model
 
         return false;
     }
+
+    public function getAll_user()
+    {
+        $this->db->select('username, full_name, email');
+        $query = $this->db->get('users');
+
+        return $query->result_array();
+    }
     
 
     public function get_userid($username)
