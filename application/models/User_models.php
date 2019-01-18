@@ -37,7 +37,7 @@ class user_models extends CI_Model
 
     public function getAll_user()
     {
-        $this->db->select('username, full_name, email');
+        $this->db->select('id, username, full_name, email');
         $query = $this->db->get('users');
 
         return $query->result_array();
@@ -219,5 +219,15 @@ class user_models extends CI_Model
     public function jumlah_kiriman($username){
         $query= $this->db->query("select count(id) AS kiriman from confide where user_id = (select id from users where username='".$username."')");
         return $query->row_array();
+    }
+    
+    public function get_account_keyword($keyword){
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->like('username',$keyword);
+        $this->db->or_like('full_name',$keyword);
+        $this->db->or_like('email',$keyword);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 }

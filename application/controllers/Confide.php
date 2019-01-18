@@ -142,7 +142,7 @@ class Confide extends CI_Controller {
 	}
 
 // ================================================
-	// F{ungsi untuk Menghapus semua jenis status //
+	// Fungsi untuk Menghapus semua jenis status //
 // ================================================
 
 	public function delete_confide($confideid)

@@ -70,4 +70,19 @@ class User extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
+	/////////////////////////////////////////
+	public function settings_admin($acc_id){
+		$data['user'] = $this->user_models->get_user('id', $acc_id);
+		$this->load->view('layouts/header');
+		$this->load->view('pages/adminsettings', $data);
+		$this->load->view('layouts/footer');
+	}
+
+	public function delete_akun($acc_id)
+	{
+		$this->confide_models->delete_account($acc_id);
+		
+		redirect('admin');
+	}
+
 }

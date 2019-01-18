@@ -379,6 +379,12 @@ public function set_confideVideoUpdate($confideid){
     public function count_comment($confideid){
         $query= $this->db->query("SELECT COUNT(id) AS jumlah_kiriman FROM `comment_confide` WHERE confide_id = '".$confideid."'");
         return $query->row_array();
-    }
+	}
+	
+
+	///////////////////////
+	public function delete_account($acc_id){
+		return $this->db->delete('users', array('id' => $acc_id));
+	}
 
 }

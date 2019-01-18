@@ -318,4 +318,39 @@ class Auth extends CI_Controller {
                 show_404();
             }
     }
+
+    public function set_settings_admin(){
+		$data = array();
+		$upload = $this->confide_models->avatarProfile();
+			
+			if($upload['result'] == "success"){ // Jika proses upload sukses
+				 // Panggil function save yang ada untuk menyimpan data ke database
+				$this->confide_models->set_settingsProfile($upload);
+				
+				redirect('admin'); // Redirect kembali ke halaman awal / halaman view data
+			}else if($upload['result'] == "failed"){ // Jika proses Settings tanpa mengupload foto sukses
+				 // Panggil function save yang ada untuk menyimpan data ke database
+				$this->confide_models->set_settingsProfileZ();
+				
+				redirect('admin'); // Redirect kembali ke halaman awal / halaman view data
+			}else{ // Jika proses upload gagal
+				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
+				die($data['message']);
+			}
+		// $this->load->view('gambar/form', $data);
+    }
+    
+    public function search_akun(){
+        $keyword = $this->input->post('keyword');
+        $check_user = $this->user_models->get_user('id', $_SESSION['user_id']);
+
+        if(@$_SESSION['akses'] == 1){
+            $data['nickname'] = $check_user['username'];
+            $data['account']=$this->user_models->get_account_keyword($keyword);
+            $this->load->view('pages/adminpage', $data);
+        } else {
+        $this->load->view('pages/adminpage', $data);
+        }
+	}
+    
 }
