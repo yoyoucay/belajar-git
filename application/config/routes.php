@@ -5,8 +5,12 @@ $route['register'] 	= 'auth/register';
 $route['login'] 	= 'auth/login';
 $route['logout'] 	= 'auth/logout';
 $route['verify/(:any)/(:any)'] 	= 'auth/verify_register/$1/$2';
+$route['forgot'] 	= 'auth/forgot_password';
+$route['verify_forgot/(:any)/(:any)'] 	= 'auth/verify_forgot/$1/$2';
+
 
 $route['admin'] = 'auth/administrator';
+$route['admin/chart'] = 'chart';
 
 $route['details/(:any)'] = 'confide/view_post/$1';
 $route['settings']  = 'user/settings';

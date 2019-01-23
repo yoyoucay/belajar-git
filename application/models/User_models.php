@@ -8,7 +8,29 @@ class user_models extends CI_Model
         parent::__construct();
     }
 
+    public function lupa_password($userid, $password)
+    {
+        $data = array('password' => password_hash($password, PASSWORD_DEFAULT));
+
+        $this->db->where('id', $userid); // mencari berdasarkan Email
+        return $this->db->update('users', $data); // mengupdate kolom role dari array $data;
+    }
+
     public function add_user($password)
+    {
+        $this->load->helper('string');
+        $_SESSION['token'] = random_string('alnum', 16);
+        $data = [
+                'username' => $this->input->post('username'),
+                'full_name' => $this->input->post('full_name'),
+                'email' => $this->input->post('email'),
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'token' => $_SESSION['token']
+        ];
+        $this->db->insert('users', $data);
+    }
+
+    public function update_password($password)
     {
         $this->load->helper('string');
         $_SESSION['token'] = random_string('alnum', 16);
@@ -40,7 +62,7 @@ class user_models extends CI_Model
         $this->db->select('id, username, full_name, email');
         $query = $this->db->get('users');
 
-        return $query->result_array();
+        return $query;
     }
     
 

@@ -62,7 +62,101 @@ class Auth extends CI_Controller {
            
     }
 
+    public function forgot_password()
+    {
+        $this->form_validation->set_rules('email', 'Email', 'required|callback_checkEmail');
+
+        if($this->form_validation->run() === false){
+            
+            $this->load->view('auth/forgotpassword');
+
+        } else {
+            $user = $this->user_models->get_user('email', $this->input->post('email'));
+            $_SESSION['token'] = $user['token'];
+            // verify
+            $this->kirim_email_forgot($this->input->post('email'), $_SESSION['token']);         
+        }    
+    }
     
+    public function kirim_email_forgot($email, $token)
+    {
+        $data['email'] = $email;
+        $data['token'] = $token;
+
+        // Konfigurasi email
+        $config = [
+               'protocol'  => 'smtp',
+               // 'mailpath'  => '/usr/sbin/sendmail',
+               'smtp_host' => 'ssl://mail.kaca-beta.com',
+               'smtp_user' => 'support@kaca-beta.com',
+               'smtp_pass' => 'c%G*liZky16[',
+               'smtp_port' => 465,
+               'smtp_keepalive' => TRUE,
+               // 'smtp_crypto' => 'SSL',
+               'wordwrap'  => TRUE,
+               'wrapchars' => 80,
+               'mailtype'  => 'html',
+               'charset'   => 'utf-8',
+               'validate'  => TRUE,
+               'crlf'      => "\r\n",
+               'newline'   => "\r\n",
+           ];
+
+        // Load library email dan konfigurasinya
+        $this->load->library('email', $config);
+
+        // Email dan nama pengirim
+        $this->email->from('no-reply@kaca-beta.com', 'Kaca Inc.');
+
+        // Email penerima
+        $this->email->to($email); // Ganti dengan email tujuan Anda
+
+        // Lampiran email, isi dengan url/path file
+        // $this->email->attach('http://kaca-beta.com/assets/img/logo5.png');
+
+        // Subject email
+        $this->email->subject('Authentication for registration');
+
+        // Isi email
+         $this->email->message("Klik link untuk mengubah password akun anda ! <a href='http://localhost/project/mobileweb/verify_forgot/$email/$token'> Lupa Password </a>");
+    
+        // Tampilkan pesan sukses atau error
+        if ($this->email->send()) {
+            $this->load->view('auth/forgotpassword', $data);
+        } else {
+            die($this->email->print_debugger());
+        }
+    }
+    
+    public function verify_forgot($email, $token)
+    {
+        $user = $this->user_models->get_user('email', $email);		
+        $data['email'] = $email;
+        $data['token'] = $token;
+
+        // cek email ada / tidak
+            if(!$user)
+            die('email not exist');
+            
+            if ($user['token'] !== $token){ 
+            die('Token not match');
+            }
+
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('password2', 'Konfirmasi Password','required|matches[password]');            
+
+            if($this->form_validation->run() === false){
+                
+                $this->load->view('auth/changepassword', $data);
+    
+            } else {
+                $this->user_models->lupa_password($user['id'], $this->input->post('password'));   
+                
+                redirect('logout');
+            }    
+            
+    }
+
     public function kirim_email($email, $token)
     {
         $data['email'] = $email;

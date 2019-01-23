@@ -34,6 +34,7 @@ html, body{
 			  </div>
 			  <button type="submit" class="btn btn-dark">Submit</button>
 			  <a href="register" class="btn btn-link text-dark">Belum punya akun</a>
+				<a href="forgot" class="btn btn-link text-dark">Lupa Password</a>
 			<?= form_close(); ?>
 		</div>
 </div>
