@@ -199,7 +199,7 @@ class user_models extends CI_Model
             users.full_name,
             users.nama_avatar
             FROM users
-            WHERE id IN (SELECT follow FROM followers WHERE user_id IN (SELECT id from users where id = '".$_SESSION['user_id']."'))"
+            WHERE id IN (SELECT send_to FROM chat WHERE send_by IN (SELECT id from users where id = '".$_SESSION['user_id']."'))"
         );
         return $query->result_array();
     }
