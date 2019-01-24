@@ -9,31 +9,36 @@
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                     <input type="text" name="email" value="<?php echo $user['email']; ?>" readonly class="form-control-plaintext">
-                    </div>
+                    <?= form_error('email'); ?>    
+                </div>
                 </div>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
                     <input type="text" name="username" value="<?php echo $user['username']; ?>" class="form-control" readonly class="form-control-plaintext">
-                    </div>
+                    <?= form_error('username'); ?>    
+                </div>
                 </div>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Fullname</label>
                     <div class="col-sm-10">
                     <input type="text" name="fullname" value="<?php echo $user['full_name']; ?>" class="form-control">
-                    </div>
+                    <?= form_error('fullname'); ?>    
+                </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Bio</label>
                     <div class="col-sm-10">
                     <textarea class="form-control" name="biodata" rows="3"><?php echo $user['biodata']; ?></textarea>
-                    </div>
+                    <?= form_error('biodata'); ?>    
+                </div>
                 </div>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Lokasi</label>
                     <div class="col-sm-10">
                     <input type="text" name="user_lokasi" value="<?php echo $user['lokasi_user']; ?>" class="form-control">
-                    </div>
+                    <?= form_error('user_lokasi'); ?>      
+                </div>
                 </div>
                 <div class="form-group row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Foto</label>

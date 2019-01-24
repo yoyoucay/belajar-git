@@ -12,10 +12,10 @@ class Auth extends CI_Controller {
 
     public function register()
     {
-        $this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]|alpha_numeric|trim');
-        $this->form_validation->set_rules('full_name', 'Full_name', 'required|is_unique[users.email]');
+        $this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]|alpha|trim');
+        $this->form_validation->set_rules('full_name', 'Full_name', 'required|is_unique[users.email]|alpha');
         $this->form_validation->set_rules('email', 'Email', 'required|is_unique[users.email]');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|max_length[12]');
         $this->form_validation->set_rules('password2', 'Konfirmasi Password','required|matches[password]');
 
         if($this->form_validation->run() === false){
@@ -361,8 +361,22 @@ class Auth extends CI_Controller {
     }
 
     public function set_settings(){
+        $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
 		$data = array();
-		$upload = $this->confide_models->avatarProfile();
+        $upload = $this->confide_models->avatarProfile();
+        
+        $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
+        // $this->form_validation->set_rules('fullname', 'Fullname', 'required|alpha_dash');
+        $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
+        $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]');
+
+        if($this->form_validation->run() === false)
+        {
+            $data['user'] = $this->user_models->get_user('id', $_SESSION['user_id']);
+            $this->load->view('layouts/header');
+            $this->load->view('pages/settings', $data);
+            $this->load->view('layouts/footer');    
+        } else {            
 			
 			if($upload['result'] == "success"){ // Jika proses upload sukses
 				 // Panggil function save yang ada untuk menyimpan data ke database
@@ -377,8 +391,8 @@ class Auth extends CI_Controller {
 			}else{ // Jika proses upload gagal
 				$data['message'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
 				die($data['message']);
-			}
-		// $this->load->view('gambar/form', $data);
+            }
+        }
 	}
 	
 	// FEEDBACK FUNCTION
