@@ -194,12 +194,7 @@ class user_models extends CI_Model
     // Menampilkan user online
     public function get_online(){
         $query= $this->db->query(
-            "SELECT 
-            users.username, 
-            users.full_name,
-            users.nama_avatar
-            FROM users
-            WHERE id IN (SELECT send_to FROM chat WHERE send_by IN (SELECT id from users where id = '".$_SESSION['user_id']."'))"
+            "SELECT users.username, users.full_name, users.nama_avatar FROM users JOIN chat ON users.id = send_to WHERE id IN (SELECT send_to FROM chat WHERE send_by IN (SELECT id from users where id = '1')) GROUP BY send_to ORDER BY MAX(time) DESC"
         );
         return $query->result_array();
     }
