@@ -286,12 +286,29 @@ class Auth extends CI_Controller {
     }
 
 
+    function checkHurufSpasi($str_in){
+        if (! preg_match("/^([-a-z0-9_ ])+$/i", $str_in)) {
+            $this->form_validation->set_message('checkHurufSpasi', 'Nama lengkap tidak boleh mengandung simbol');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    function checkHurufKoma($str_in){
+        if (! preg_match("/^([,-a-z0-9_ ])+$/i", $str_in)) {
+            $this->form_validation->set_message('checkHurufKoma', 'Lokasi tidak boleh mengandung simbol');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
 
     public function checkEmail($email)
     {
         // Check email pada saat login
             if (!$this->user_models->get_user('email', $email)) { 
-            $this->form_validation->set_message('checkEmail', 'email tidak ada pada database');
+            $this->form_validation->set_message('checkEmail', 'Maaf, Email tidak ditemukan.');
             return false;
             }
 
@@ -315,7 +332,7 @@ class Auth extends CI_Controller {
         $user = $this->user_models->get_user('email', $email);
 
         if ($user['role'] == 0) {
-            $this->form_validation->set_message('checkRole', 'Email Belum diaktivasi');
+            $this->form_validation->set_message('checkRole', 'Anda belum melakukan aktivasi email.');
             return false;
         }
 
@@ -365,10 +382,10 @@ class Auth extends CI_Controller {
 		$data = array();
         $upload = $this->confide_models->avatarProfile();
         
-        $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
-        // $this->form_validation->set_rules('fullname', 'Fullname', 'required|alpha_dash');
-        $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
-        $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]');
+        // $this->form_validation->set_rules('username', 'Username', 'required|alpha|trim');
+        // $this->form_validation->set_rules('fullname', 'Fullname', 'required|callback_checkHurufSpasi');
+        // $this->form_validation->set_rules('biodata', 'Biodata', 'max_length[120]');
+        $this->form_validation->set_rules('user_lokasi', 'Lokasi', 'max_length[60]|callback_checkHurufKoma');
 
         if($this->form_validation->run() === false)
         {
