@@ -28,7 +28,7 @@ html, body{
 			    	<label for="exampleInputEmail1">Nama Lengkap</label>
 			    	<input type="text" name="full_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Full name">
 					<?= form_error('full_name'); ?>
-				</div>	
+				</div>
 				<div class="form-group text-dark">
 				    <label for="exampleInputEmail1">Email address</label>
 				    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
