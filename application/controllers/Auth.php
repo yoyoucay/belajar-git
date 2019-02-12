@@ -27,16 +27,11 @@ class Auth extends CI_Controller {
         } else {
             // user
             $password = $this->input->post('password');
-            $this->send_register($password);
+            $this->user_models->add_user($password);
             // verify
             $this->kirim_email($this->input->post('email'), $_SESSION['token']);
 
         }
-    }
-
-    public function send_register($password)
-    {
-      return $this->user_models->add_user($password);
     }
 
     public function activationUser()
@@ -250,7 +245,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|callback_checkEmail');
         $this->form_validation->set_rules('password', 'Password', 'required|callback_checkPassword');
 
-        $check_user =  $this->send_login('email', $this->input->post('email'));
+        $check_user =  $this->user_models->get_user('email', $this->input->post('email'));
 
         if($this->form_validation->run() === false)
         {
@@ -282,8 +277,6 @@ class Auth extends CI_Controller {
             // set session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['logged_in'] = true;
-
-
 
             // redirect
             redirect('home');

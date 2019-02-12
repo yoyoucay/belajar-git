@@ -11,9 +11,11 @@ $route['verify_forgot/(:any)/(:any)']     = 'auth/verify_forgot/$1/$2';
 //=====================================================================
 
 //======================= Route API ===================================
-$route['kirim_register']['POST']          ='auth/send_register';
-$route['kirim_login']['POST']        	    = 'auth/send_login';
-//=====================================================================
+$route['q_register']['POST']          = 'API_confide/send_register';
+$route['q_login']               	    = 'API_confide/send_login';
+$route['q_token']['GET']              = 'API_confide/check_token';
+$route['z_login']['PUT']              = 'API_confide/login_token';
+//================================================================q
 
 $route['admin'] = 'auth/administrator';
 $route['admin/chart'] = 'chart';

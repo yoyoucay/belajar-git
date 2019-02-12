@@ -2,7 +2,7 @@
 
 class user_models extends CI_Model
 {
-    
+
     function __construct()
     {
         parent::__construct();
@@ -64,7 +64,7 @@ class user_models extends CI_Model
 
         return $query;
     }
-    
+
 
     public function get_userid($username)
     {
@@ -76,7 +76,7 @@ class user_models extends CI_Model
         return $data[0]['id'];
     }
 
-        
+
     public function update_role($user_id, $role_num)
     {
         $data = array('role' => $role_num ); // menerima data role dari auth.php/verify_register
@@ -101,7 +101,7 @@ class user_models extends CI_Model
         // menguji session
         if(!isset($_SESSION['logged_in'])){
             return false;
-        }	
+        }
         return true;
     }
 
@@ -114,13 +114,13 @@ class user_models extends CI_Model
 
         return false;
     }
-    
+
     public function get_users($username = FALSE)
     {
         $query = $this->db->get_where('users', array('username' => $username));
         return $query->row_array();
     }
-    
+
     public function get_confide()
     {
         $query = $this->db->get('confide');
@@ -128,7 +128,7 @@ class user_models extends CI_Model
     }
 
     public function set_follow(){
-			
+
         $data = array(
             'user_id' => $this->input->post('aku'),
             'follow' => $this->input->post('dia')
@@ -138,7 +138,7 @@ class user_models extends CI_Model
     }
 
     public function set_unfollow(){
-			
+
         $data = array(
             'user_id' => $this->input->post('aku'),
             'follow' => $this->input->post('dia')
@@ -151,24 +151,24 @@ class user_models extends CI_Model
 		$query = $this->db->query("SELECT user_id, follow FROM followers WHERE user_id = '".@$_SESSION['user_id']."' AND follow = (SELECT id FROM users WHERE username = '".$username."')");
         return $query->result_array();
     }
-    
+
     // Mengambil nilai jumlah Followers untuk ditampilkan ke Profile Page
     public function ambil_followers($username){
         $query= $this->db->query("select count(user_id)-1 AS pengikut from followers where follow = (select id from users where username='".$username."')");
         return $query->row_array();
         }
-    
+
     // Mengambil nilai jumlah Following untuk ditampilkan ke Profile Page
     public function ambil_following($username){
         $query= $this->db->query("select count(user_id)-1 AS mengikuti from followers where user_id = (select id from users where username='".$username."')");
         return $query->row_array();
             }
-    
+
     // Mengambil nilai jumlah Followers untuk ditampilkan ke Profile Page dengan avatar
     public function ambil_followers_avatar($username){
         $query= $this->db->query(
-            "SELECT 
-            users.username, 
+            "SELECT
+            users.username,
             users.full_name,
             users.nama_avatar
             FROM users
@@ -177,12 +177,12 @@ class user_models extends CI_Model
         );
         return $query->result_array();
     }
-    
+
     // Mengambil nilai jumlah Following untuk ditampilkan ke Profile Page dengan avatar
     public function ambil_following_avatar($username){
         $query= $this->db->query(
-            "SELECT 
-            users.username, 
+            "SELECT
+            users.username,
             users.full_name,
             users.nama_avatar
             FROM users
@@ -190,7 +190,7 @@ class user_models extends CI_Model
         );
         return $query->result_array();
     }
-    
+
     // Menampilkan user online
     public function get_online(){
         $query= $this->db->query(
@@ -198,7 +198,7 @@ class user_models extends CI_Model
         );
         return $query->result_array();
     }
-    
+
     public function getChat($accountid, $userid)
     {
                     $chats = $this->db
@@ -219,8 +219,8 @@ class user_models extends CI_Model
         $data = array('chat_id' => $chatid);
         return $this->db->delete('chat', $data);
     }
-    
-    
+
+
     // Fungsi untuk mencari Akun dari username, maupun Full name
     public function searchppl($search)
     {
@@ -231,13 +231,13 @@ class user_models extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-    
+
     // Jumlah Kiriman User
     public function jumlah_kiriman($username){
         $query= $this->db->query("select count(id) AS kiriman from confide where user_id = (select id from users where username='".$username."')");
         return $query->row_array();
     }
-    
+
     public function get_account_keyword($keyword){
         $this->db->select('*');
         $this->db->from('users');
